@@ -1,0 +1,176 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="image_home" style="background-image: url('/static/img/icon/imagen.jpg');">
+    <p>ALCHEMY RESTAURANTS</p>
+</div>
+<section>
+    <div class="restaurants_info"> <!--need to be cleaner, maybe deleting principal_container is a better solution,and just using the margin instead of making it a flexbox-->
+
+        <div class="search_container">
+            <form action="" class="form_search_container" method='POST'>
+                {{ form.hidden_tag() }}
+                {{form.name(class="search_input")}}
+                {% if filter_ready %}
+                    {{ form.submit(class="search_button_ready") }}
+                    <a href="{{url_for('home')}}" class="clean_button">Clean</a>
+                {% else%}
+                    {{ form.submit(class="search_button") }}
+                {% endif %}
+            </form>
+        </div>
+        
+        <div class="restaurants_info_item">
+            <div class="restaurants_info_item_image">
+                <img src="{{url_for('static', filename = 'img/icon/mollete.png')}}" alt="" class="item_height_image">
+            </div>
+            <div class="restaurants_info_item_text">
+                <div class="restaurant_info_title">Bakery</div>
+                <a class="restaurants_info_item_text_info" href="#bakery">{{ total_restaurants[0] }}</a>
+            </div>
+        </div>
+
+        <div class="restaurants_info_item">
+            <div class="restaurants_info_item_image">
+                <img src="/static/img/icon/burger.png" alt="" class="item_height_image">
+            </div>
+            <div class="restaurants_info_item_text">
+                <div class="restaurant_info_title">Fast Food</div>
+                <a class="restaurants_info_item_text_info" href="#fast_food">{{ total_restaurants[1] }}</a>
+            </div>
+        </div>
+
+        <div class="restaurants_info_item">
+            <div class="restaurants_info_item_image">
+                <img src="/static/img/icon/lobster.png" alt="" class="item_height_image">
+            </div>
+            <div class="restaurants_info_item_text">
+                <div class="restaurant_info_title">Sea Food</div>
+                <a class="restaurants_info_item_text_info" href="#sea_food">{{ total_restaurants[2] }}</a>
+            </div>
+        </div>
+
+        <div class="restaurants_info_item">
+            <div class="restaurants_info_item_image">
+                <img src="/static/img/icon/bibimbap.png" alt="" class="item_height_image">
+            </div>
+            <div class="restaurants_info_item_text">
+                <div class="restaurant_info_title">Casual Food</div>
+                <a class="restaurants_info_item_text_info" href="#casual">{{ total_restaurants[3] }}</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Restaurant presentation cards -->
+<section>
+    <div class="restaurants_container">
+        {% if fast_food_restaurants %}
+            <div class="restaurant_type" id="fast_food">
+                <p><b>Fast Food</b></p>
+            </div>
+            <div class="restaurant_cards">
+                {% for restaurant in fast_food_restaurants %}
+                <div class="rest_card">
+                    <div class="card_image">
+                        <img src="{{url_for('static', filename = 'img/restaurant_image/' + restaurant.image_file)}}" alt="" class="img_card">
+                    </div>
+                    <div class="card_text">
+                        <div>
+                            <p><b>{{ restaurant.name }}</b></p>
+                            <p>Created by: <a href="{{url_for('account', account_id = restaurant.owner.id)}}" class="profile_link">{{ restaurant.owner.username }}</a></p>
+                        </div>
+                        <a href="{{url_for('menu', restaurant_id = restaurant.id)}}" class="menu_button">
+                            <div class="menu_link">
+                                Show More
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if bakery_restaurants %}
+            <div class="restaurant_type" id="bakery">
+                <p><b>Bakery</b></p>
+            </div>
+            <div class="restaurant_cards">
+                {% for restaurant in bakery_restaurants %}
+                <div class="rest_card">
+                    <div class="card_image">
+                        <img src="{{url_for('static', filename = 'img/restaurant_image/' + restaurant.image_file)}}" alt="" class="img_card">
+                    </div>
+                    <div class="card_text">
+                        <div>
+                            <p><b>{{ restaurant.name }}</b></p>
+                            <p>Created by: <a href="{{url_for('account', account_id = restaurant.owner.id)}}" class="profile_link">{{ restaurant.owner.username }}</a></p>
+                        </div>
+                        <a href="{{url_for('menu', restaurant_id = restaurant.id)}}" class="menu_button">
+                            <div class="menu_link">
+                                Show More
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if casual_restaurants %}
+            <div class="restaurant_type" id="casual">
+                <p><b>Casual Food</b></p>
+            </div>
+            <div class="restaurant_cards">
+                {% for restaurant in casual_restaurants %}
+                <div class="rest_card">
+                    <div class="card_image">
+                        <img src="{{url_for('static', filename = 'img/restaurant_image/' + restaurant.image_file)}}" alt="" class="img_card">
+                    </div>
+                    <div class="card_text">
+                        <div>
+                            <p><b>{{ restaurant.name }}</b></p>
+                            <p>Created by: <a href="{{url_for('account', account_id = restaurant.owner.id)}}" class="profile_link">{{ restaurant.owner.username }}</a></p>
+                        </div>
+                        <a href="{{url_for('menu', restaurant_id = restaurant.id)}}" class="menu_button">
+                            <div class="menu_link">
+                                Show More
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if sea_food_restaurants %}
+            <div class="restaurant_type">
+                <p><b>Sea Food</b></p>
+            </div>
+            <div class="restaurant_cards" id="sea_food">
+                {% for restaurant in sea_food_restaurants %}
+                <div class="rest_card">
+                    <div class="card_image">
+                        <img src="{{url_for('static', filename = 'img/restaurant_image/' + restaurant.image_file)}}" alt="" class="img_card">
+                    </div>
+                    <div class="card_text">
+                        <div>
+                            <p><b>{{ restaurant.name }}</b></p>
+                            <p>Created by: <a href="{{url_for('account', account_id = restaurant.owner.id)}}" class="profile_link">{{ restaurant.owner.username }}</a></p>
+                        </div>
+                        <a href="{{url_for('menu', restaurant_id = restaurant.id)}}" class="menu_button">
+                            <div class="menu_link">
+                                Show More
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+
+
+{% endblock content%}

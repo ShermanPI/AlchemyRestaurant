@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="background">
+    <form action="" method="POST" class="form">
+        {{ form.hidden_tag() }}
+        <h1>Hello again!</h1><hr>
+        <div class="form_group">
+            <i>{{ form.email.label }}</i>
+            {% if form.email.errors %}
+                {{ form.email(class = "form_field form_field_error") }}
+                {% for error in form.email.errors%}
+                    <span class="field_error"> {{ error }} </span>
+                {% endfor %}
+            {% else %}
+                {{ form.email(class = "form_field") }}
+            {% endif %}
+
+        </div>
+        <div class="form_group">
+            <i>{{ form.password.label }}</i>
+            {% if form.password.errors %}
+                {{ form.password(class = "form_field form_field_error") }}
+                {% for error in form.password.errors%}
+                    <span class="field_error"> {{ error }} </span>
+                {% endfor %}
+            {% else %}
+                {{ form.password(class = "form_field") }}
+            {% endif %}
+        </div>
+        <div class="form_group">
+            {{ form.submit(class = "submit_button form_field") }}
+        </div>
+        <div class="form_group">
+            <a class="remember" href="{{url_for('register')}}">Don't you have an account?</a>
+            <p class="form_text">{{ form.remember(class="remember") }} Remember me</p>
+        </div>
+        
+    </form>
+</div>
+
+{% endblock content%}

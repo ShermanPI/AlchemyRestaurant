@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,400;1,300&display=swap"
+        rel="stylesheet">
+    <!--favicon-->
+    <link rel="icon" href="/static/img/icon/te.ico">
+</head>
+
+<body>
+<!-- MENU -->
+<header>
+    <div class="item_container">
+        <div class="navbar">
+            <!-- Left side-->
+            <div class="left_side">
+                <a href="{{url_for('home')}}" class="nav_item">
+                    <div>
+                        <img src="{{url_for('static', filename='/img/icon/casa.png')}}" class="nav_item_img" alt="">
+                    </div>
+                    <div>Home</div>
+                </a>
+            </div>
+            <!-- Right side-->
+            <div class="right_side">
+                {% if current_user.is_authenticated %}
+                <a href="{{url_for('add_restaurant')}}" class="nav_item">
+                    <div>
+                        <img src="{{url_for('static', filename='/img/icon/add.png')}}" class="nav_item_img" alt="">
+                    </div>
+                    <div>Create Restaurant</div>
+                </a>
+                <a href="{{url_for('account', account_id = current_user.id)}}" class="nav_item">
+                    <div>
+                        <img src="{{url_for('static', filename='/img/icon/user.png')}}" class="nav_item_img" alt="">
+                    </div>
+                    <div>{{current_user.username}}</div>
+                </a>
+                <a href="{{url_for('logout')}}" class="nav_item">
+                    <div>
+                        <img src="{{url_for('static', filename='/img/icon/logout.png')}}" class="nav_item_img" alt="">
+                    </div>
+                    <div>Log out</div>
+                </a>
+                {% else %}
+                <a href="{{url_for('login')}}" class="nav_item">
+                    <div>
+                        <img src="{{url_for('static', filename='/img/icon/user.png')}}" class="nav_item_img" alt="">
+                    </div>
+                    <div>Log In</div>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</header>
+
+    {% with messages = get_flashed_messages(with_categories = true) %}
+    {% if messages %}
+    {% for category, message in messages%}
+    <div class="message_container">
+        <div class="message {{category}}">
+            {{ message }}
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+    <!-- you couldmake a layput for the forms too -->
+</body>
+<script>
+    setTimeout(function () {
+        const messagesContainer = document.querySelector('.message_container')
+
+        if (!messagesContainer) return;
+        messagesContainer.style.display = 'none'
+
+    }, 4000)
+</script>
+
+</html>

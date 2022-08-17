@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+
+<div class="account_container">
+
+    <div class="account_card">
+        <div class="center_form">
+            <div class="edit_title">
+                <a href = "{{url_for('account', account_id = current_user.id)}}" class="back_item">
+                    <img src="{{url_for('static', filename = 'img/icon/previous.png')}}" alt="">
+                </a>
+                <b>Edit My Profile</b>
+            </div>
+            <form action="" method="POST" class="update_form" enctype="multipart/form-data">  <!--enctype="multipart/form-data" this is for the form can send images--> 
+                {{ form.hidden_tag() }}
+                <div class="form_group">
+                    {{ form.username.label }}   
+                    {% if form.username.errors %}
+                        {{ form.username(class = "form_item form_field_error") }}
+                        {% for error in form.username.errors%}
+                            <span class="field_error"> {{ error }} </span>
+                        {% endfor %}
+                    {% else %}
+                        {{ form.username(class = "form_item") }}
+                    {% endif %}
+        
+                </div>
+                <div class="form_group">
+                    {{ form.email.label }}  
+                    {% if form.email.errors %}
+                        {{ form.email(class = "form_item form_field_error") }}
+                        {% for error in form.email.errors%}
+                            <span class="field_error"> {{ error }} </span>
+                        {% endfor %}
+                    {% else %}
+                        {{ form.email(class = "form_item") }}
+                    {% endif %}
+        
+                </div>
+                <div class="form_group">
+                    {{ form.image_file.label }} 
+                    {{ form.image_file}}
+                    {% if form.image_file.errors %}
+                        {% for error in form.image_file.errors%}
+                            <span class="field_error"> {{ error }} </span>
+                        {% endfor %}
+                    {% endif %}
+        
+                </div>
+                <div class="form_group">
+                    {{ form.submit(class = "submit_button form_field") }}
+                </div>
+            </form>
+        </div>
+
+        <!-- Save Changes ⚙️ -->
+        <div class="profile_card_image">
+            <img class="account_card_img" src="{{url_for('static', filename = '/img/page_images/profile.gif')}}" alt="">
+        </div>
+    </div>
+
+</div>
+
+<!-- 
+<h1> {{ current_user.username }} </h1> -->
+{% endblock content%}

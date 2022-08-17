@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="account_container">
+    <div class="account_card">
+
+        <div class="center_form">
+
+            <div class="edit_title">
+                <a href = "{{url_for('menu', restaurant_id = restaurant.id)}}" class="back_item">
+                    <img src="{{url_for('static', filename = 'img/icon/previous.png')}}" alt="">
+                </a>
+                <b>Create Restaurant Item for {{ restaurant.name }}</b>
+            </div>
+            <form action="" method="POST" enctype="multipart/form-data">  <!--enctype="multipart/form-data" this is for the form can send images--> 
+                {{ form.hidden_tag() }}
+                <div class="form_group">
+                    {{ form.name.label }}
+                    {% if form.name.errors %}
+                        {{ form.name(class = "form_item form_field_error") }}
+                        {% for error in form.name.errors%}
+                            <span class="field_error"> {{ error }} </span>
+                        {% endfor %}
+                    {% else %}
+                        {{ form.name(class = "form_item") }}
+                    {% endif %}
+        
+                </div>
+                <div class="form_group">
+                    {{ form.type.label }}   
+                    {% if form.type.errors %}
+                        {{ form.type(class = "form_item form_field_error") }}
+                        {% for error in form.type.errors%}
+                            <span class="field_error"> {{ error }} </span>
+                        {% endfor %}
+                    {% else %}
+                        {{ form.type(class = "form_item") }}
+                    {% endif %}
+        
+                </div>
+                <div class="form_group">
+                    {{ form.price.label }}   
+                    {% if form.price.errors %}
+                        {{ form.price(class = "form_item form_field_error") }}
+                        {% for error in form.price.errors%}
+                            <span class="field_error"> {{ error }} </span>
+                        {% endfor %}
+                    {% else %}
+                        {{ form.price(class = "form_item") }}
+                    {% endif %}
+        
+                </div>
+                <div class="form_group">
+                    {{ form.description.label }}   
+                    {% if form.description.errors %}
+                        {{ form.description(class = "form_item form_field_error") }}
+                        {% for error in form.description.errors%}
+                            <span class="field_error"> {{ error }} </span>
+                        {% endfor %}
+                    {% else %}
+                        {{ form.description(class = "form_item") }}
+                    {% endif %}
+        
+                </div>
+                <div class="form_group">
+                    {{ form.image_file.label }} 
+                    {{ form.image_file}}
+                    {% if form.image_file.errors %}
+                        {% for error in form.image_file.errors%}
+                            <span class="field_error"> {{ error }} </span>
+                        {% endfor %}
+                    {% endif %}
+        
+                </div>
+                <div class="form_group">
+                    {{ form.submit(class = "submit_button form_field") }}
+                </div>
+                
+            </form>
+            
+        </div>
+        <!--IMAGE-->
+        <div class="profile_card_image">
+            <img class="add_card_img" src="{{url_for('static', filename = '/img/page_images/burger-pana.png')}}" alt="">
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock content %}

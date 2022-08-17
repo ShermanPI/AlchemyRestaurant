@@ -1,0 +1,122 @@
+{% extends "layout.html" %}
+{% block content %}
+<section class="p-top7">
+    <div class="restaurant_title">
+        <div>
+            <div class="menu_info">
+                <p class="menu_title">{{restaurant.name}}</p>
+                <p>Created by: <a href="{{url_for('account', account_id = restaurant.owner.id)}}" class="profile_link">{{restaurant.owner.username}}</a>{% if restaurant.owner.id == current_user.id %}, <a href="{{url_for('client_menu', restaurant_id = restaurant.id)}}" class="profile_link"> Client Mode </a> {% endif %}</p>
+            </div>
+
+            <div class="owner_card_image">
+                <img src="{{url_for('static' ,filename = '/img/profile/' + restaurant.owner.image_file)}}"  alt="" class="menu_owner_img">
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if restaurant.owner.id == current_user.id %}
+
+<section>
+    <div class="crud_container">
+        <a href="{{url_for('edit_restaurant', restaurant_id = restaurant.id)}}" class="button">
+            <div>
+                <img src="/static/img/icon/edit_restaurant.png" alt="" class="button_image">
+                <p>Edit Restaurant</p>
+            </div>
+        </a>
+        <a href="{{url_for('addItem', restaurant_id = restaurant.id)}}" class="button">
+            <div>
+                <img src="/static/img/icon/add_item.png" alt="" class="button_image">
+                <p>Add item</p>
+            </div>
+        </a>
+        <a href="{{url_for('delete_restaurant', restaurant_id = restaurant.id)}}" class="button" onclick="checker()">
+            <div>
+                <img src="/static/img/icon/delete_restaurant.png" alt="" class="button_image">
+                <p>Delete Restaurant</p>
+            </div>
+        </a>
+    </div>
+</section>
+
+{% endif %}
+
+<section>
+    <div class="course_container">
+        <div class="split">
+            {% if entreeMenuItems%}
+            <div class="type_container">
+                <p class="blue-text"><b>Entree</b></p>
+                {% for item in entreeMenuItems%}
+                    <a class="menu_item" href="#">
+                        <div class="item_img">
+                            <img src="{{url_for('static', filename = '/img/item/' + item.image_file)}}" alt="" class="item_img_img">
+                        </div>
+                        <div class="menu_item_info">
+                            <b>{{item.name}}</b>
+                            <p><b class="action">$</b> {{item.price}}</p>
+                            <p class="gray-text">{{item.description}}</p>
+                        </div>
+                    </a>
+                    {% if restaurant.owner.id == current_user.id %}
+                        <p class="item_crud"><a href="{{url_for('edit_menu_item', restaurant_id = restaurant.id, item_id = item.id)}}" class="crud_link">Edit</a> | <a href="{{url_for('delete_menu_item', restaurant_id = restaurant.id, item_id = item.id)}}" class="crud_link" onclick="checker()">Delete</a></p>
+                    {% endif %}    
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if appetizerMenuItems%}
+            <div class="type_container">
+                <p class="blue-text"><b>Appetizer</b></p>
+                {% for item in appetizerMenuItems%}
+                    <a class="menu_item" href="#">
+                        <div class="item_img">
+                            <img src="{{url_for('static', filename = '/img/item/' + item.image_file)}}" alt="" class="item_img_img">
+                        </div>
+                        <div class="menu_item_info">
+                            <b>{{item.name}}</b>
+                            <p><b class="action">$</b> {{item.price}}</p>
+                            <p class="gray-text">{{item.description}}</p>
+                        </div>
+                    </a>
+                    {% if restaurant.owner.id == current_user.id %}
+                        <p class="item_crud"><a href="{{url_for('edit_menu_item', restaurant_id = restaurant.id, item_id = item.id)}}" class="crud_link">Edit</a> | <a href="{{url_for('delete_menu_item', restaurant_id = restaurant.id, item_id = item.id)}}" class="crud_link" onclick="checker()">Delete</a></p>
+                    {% endif %}    
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if dessertMenuItems%}
+            <div class="type_container">
+                <p class="blue-text"><b>Dessert</b></p>
+                {% for item in dessertMenuItems%}
+                    <a class="menu_item" href="#">
+                        <div class="item_img">
+                            <img src="{{url_for('static', filename = '/img/item/' + item.image_file)}}" alt="" class="item_img_img">
+                        </div>
+                        <div class="menu_item_info">
+                            <b>{{item.name}}</b>
+                            <p><b class="action">$</b> {{item.price}}</p>
+                            <p class="gray-text">{{item.description}}</p>
+                        </div>
+                    </a>
+                    {% if restaurant.owner.id == current_user.id %}
+                        <p class="item_crud"><a href="{{url_for('edit_menu_item', restaurant_id = restaurant.id, item_id = item.id)}}" class="crud_link">Edit</a> | <a href="{{url_for('delete_menu_item', restaurant_id = restaurant.id, item_id = item.id)}}" class="crud_link" onclick="checker()">Delete</a></p>
+                    {% endif %}    
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<script>
+    function checker(){
+        var result = confirm('¿Estás seguro que quieres eliminar {{restaurant.name}}?')
+        if(result == false){
+            event.preventDefault();
+        } 
+    }
+</script>
+
+{% endblock content %}

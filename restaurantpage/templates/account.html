@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+
+<div class="account_container">
+
+    <div class="account_card">
+
+        <div class="profile_card_image">
+            <img class="account_card_img" src="{{url_for('static', filename = '/img/page_images/Marketplace.gif')}}" alt="">
+        </div>
+
+        <div class="account_info">
+            <img class = "profile_pic" src="{{ image_file }}" alt="">
+            
+            <h1 class="dark_text">{{user.username}}</h1>
+            <h4 class="light_text">{{user.email}}</h4>
+            {% if user.id == current_user.id %}
+                <a class="edit_profile_button" href="{{url_for('edit_profile')}}">
+                    Edit My Profile 🔧
+                </a>
+            {% endif %}
+        </div>
+        
+    </div>
+
+</div>
+
+{% endblock content%}
